@@ -3,10 +3,19 @@ import turtle as t
 import time
 from pacmanClass import Pacman
 
+
 window = t.Screen()
-window.setup(800, 800)
+window.title("Pacman")
+
+windowHigh = 800
+windowWidth = 800
+
+window.setup(windowWidth, windowHigh)
 t.bgcolor("black")
 window.tracer(0)
+
+wallSize = (2, 2)
+
 
 
 class Wall:
@@ -21,8 +30,22 @@ class Wall:
 
 
 walls = []
-walls.append(Wall((-350, -370), (2, 2)))
-walls.append(Wall((0, 0), (2,2)))
+
+
+
+
+def drawWalls():
+    for x in range(int((windowWidth/2 * -1) + wallSize[0]*10), int((windowWidth/2)), wallSize[0]*20):
+        walls.append(Wall((x, 380), wallSize))
+        walls.append(Wall((x, -380), wallSize))
+
+    for y in range(int((windowHigh/2 * -1) + wallSize[1]*10), int((windowHigh/2)), wallSize[1]*20):
+        walls.append(Wall((380, y), wallSize))
+        walls.append(Wall((-380, y), wallSize))
+
+
+drawWalls()
+
 
 
 pacman = Pacman()
@@ -31,6 +54,12 @@ t.onkeypress(pacman.goDown, "Down")
 t.onkeypress(pacman.goLeft, "Left")
 t.onkeypress(pacman.goRight, "Right")
 
+
+
+
+
+
+
 t.listen()
 while True:
     window.update()
@@ -38,7 +67,6 @@ while True:
 
     for wall in walls:
         if pacman.distance(wall.wall) < 45:
-            print(pacman.distance(wall.wall))
             if pacman.getDirection() == "up":
                 pacman.pacman.sety(pacman.pacman.ycor() - 5)
             elif pacman.getDirection() == "down":
