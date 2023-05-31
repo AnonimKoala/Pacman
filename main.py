@@ -2,6 +2,7 @@
 import turtle as t
 import time
 from pacmanClass import Pacman
+from enemiesClass import Enemy
 
 
 window = t.Screen()
@@ -49,6 +50,7 @@ drawWalls()
 
 
 pacman = Pacman()
+enemy = Enemy()
 t.onkeypress(pacman.goUp, "Up")
 t.onkeypress(pacman.goDown, "Down")
 t.onkeypress(pacman.goLeft, "Left")
@@ -64,19 +66,27 @@ t.listen()
 while True:
     window.update()
     pacman.move()
+    enemy.move()    
+
 
     for wall in walls:
         if pacman.distance(wall.wall) < 45:
-            if pacman.getDirection() == "up":
-                pacman.pacman.sety(pacman.pacman.ycor() - 5)
-            elif pacman.getDirection() == "down":
-                pacman.pacman.sety(pacman.pacman.ycor() + 5)
-            elif pacman.getDirection() == "left":
-                pacman.pacman.setx(pacman.pacman.xcor() + 5)
-            elif pacman.getDirection() == "right":
-                pacman.pacman.setx(pacman.pacman.xcor() - 5)
+            pacman.wallColission()
+            print(pacman.distance(wall.wall), pacman.getDirection())
+            # if pacman.getDirection() == "up":
+            #     pacman.pacman.sety(pacman.pacman.ycor() - 5)
+            # elif pacman.getDirection() == "down":
+            #     pacman.pacman.sety(pacman.pacman.ycor() + 5)
+            # elif pacman.getDirection() == "left":
+            #     pacman.pacman.setx(pacman.pacman.xcor() + 5)
+            # elif pacman.getDirection() == "right":
+            #     pacman.pacman.setx(pacman.pacman.xcor() - 5)
                  
-            pacman.setDirection("stop")
+            # pacman.setDirection("stop")
+
+        if enemy.distance(wall.wall) < 45:
+            enemy.wallColission()
+            
 
 
 

@@ -12,6 +12,7 @@ class Enemy:
         self.enemy.directions = ["up", "down", "left", "right"]
         self.enemy.direction = random.choice(self.enemy.directions)
         self.enemy.shapesize(2, 2)
+        self.moveSpeed = 10
 
     def goDown(self):
         self.enemy.direction = "down"
@@ -54,20 +55,17 @@ class Enemy:
     def getY(self):
         return self.enemy.ycor()
     
-# TODO: zmienić na losowe kierunki
-    def rotateAndMoveBeforeWall(self):
-        if self.enemy.direction == "up":
-            self.enemy.direction = "left"
-            self.enemy.setx(self.enemy.xcor() - 5)
-        elif self.enemy.direction == "down":
-            self.enemy.direction = "right"
-            self.enemy.setx(self.enemy.xcor() + 5)
-        elif self.enemy.direction == "left":
-            self.enemy.direction = "down"
-            self.enemy.sety(self.enemy.ycor() - 5)
-        elif self.enemy.direction == "right":
-            self.enemy.direction = "up"
-            self.enemy.sety(self.enemy.ycor() + 5)
+    def wallColission(self):
+        if self.getDirection() == "up":
+            self.enemy.sety(self.enemy.ycor() - self.moveSpeed*1.3)
+        elif self.getDirection() == "down":
+            self.enemy.sety(self.enemy.ycor() + self.moveSpeed*1.3)
+        elif self.getDirection() == "left":
+            self.enemy.setx(self.enemy.xcor() + self.moveSpeed*1.3)
+        elif self.getDirection() == "right":
+            self.enemy.setx(self.enemy.xcor() - self.moveSpeed*1.3)
+        
+        self.enemy.direction = random.choice(self.enemy.directions)
 
 
     def upWall(self):
