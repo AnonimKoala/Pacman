@@ -3,54 +3,38 @@ import turtle as t
 import time
 from pacmanClass import Pacman
 from enemiesClass import Enemy
+from wallClass import Walls
+from config import *
+import json
 
-
-window = t.Screen()
-window.title("Pacman")
-
-windowHigh = 800
-windowWidth = 800
-
-window.setup(windowWidth, windowHigh)
-t.bgcolor("black")
-window.tracer(0)
-
-wallSize = (2, 2)
-
-
-
-class Wall:
-    def __init__(self, pos, size):
-        self.wall = t.Turtle()
-        self.wall.shape("square")
-        self.wall.color("#001a8f")
-        self.wall.penup()
-        self.wall.shapesize(stretch_len=size[0], stretch_wid=size[1])
-        self.wall.goto(pos[0], pos[1])
-
-
-
-walls = []
+jsonWrite = open("walls.json", "w")
+jsonRead = open("walls.json", "r")
 
 
 
 
-def drawWalls():
-    for x in range(int((windowWidth/2 * -1) + wallSize[0]*10), int((windowWidth/2)), wallSize[0]*20):
-        walls.append(Wall((x, 380), wallSize))
-        walls.append(Wall((x, -380), wallSize))
-
-    for y in range(int((windowHigh/2 * -1) + wallSize[1]*10), int((windowHigh/2)), wallSize[1]*20):
-        walls.append(Wall((380, y), wallSize))
-        walls.append(Wall((-380, y), wallSize))
 
 
-drawWalls()
+
+
+
+
+
+
+# Walls.drawWalls()
+Walls.addWall(-380.00,260.00)
 
 
 
 pacman = Pacman()
-enemy = Enemy()
+enemies = []
+# enemies.append(Enemy('red',0))
+# enemies.append(Enemy("blue",1))
+# enemies.append(Enemy("pink",2))
+# enemies.append(Enemy("orange",3))
+
+
+
 t.onkeypress(pacman.goUp, "Up")
 t.onkeypress(pacman.goDown, "Down")
 t.onkeypress(pacman.goLeft, "Left")
@@ -60,36 +44,47 @@ t.onkeypress(pacman.goRight, "Right")
 
 
 
+window.onclick(Walls.addWall)
+window.onclick(Walls.deleteWall, 3)
 
+def printAllWalls():
+    allWalls = []
+    for wall in Walls.wallsTab:
+        allWalls.append(wall.wall.pos())
+    print(allWalls)
+
+
+
+# Clear all Walls
+# Walls.wallsTab.clear()
+
+t.onkeypress(printAllWalls, "p")
 
 t.listen()
 while True:
     window.update()
     pacman.move()
-    enemy.move()    
+    for enemy in enemies:
+        enemy.move()    
 
 
-    for wall in walls:
+    for wall in Walls.wallsTab:
         if pacman.distance(wall.wall) < 45:
             pacman.wallColission()
-            print(pacman.distance(wall.wall), pacman.getDirection())
-            # if pacman.getDirection() == "up":
-            #     pacman.pacman.sety(pacman.pacman.ycor() - 5)
-            # elif pacman.getDirection() == "down":
-            #     pacman.pacman.sety(pacman.pacman.ycor() + 5)
-            # elif pacman.getDirection() == "left":
-            #     pacman.pacman.setx(pacman.pacman.xcor() + 5)
-            # elif pacman.getDirection() == "right":
-            #     pacman.pacman.setx(pacman.pacman.xcor() - 5)
-                 
-            # pacman.setDirection("stop")
 
-        if enemy.distance(wall.wall) < 45:
-            enemy.wallColission()
+
+        for enemy in enemies:
+            if enemy.distance(wall.wall) < 45:
+                enemy.wallColission()
+            if enemy.distance(pacman.pacman) < 40:
+                print("GAME OVER")
+                time.sleep(1)
+                window.bye()
+                quit()
             
 
 
 
 
 
-    time.sleep(0.1)
+    time.sleep(0.05)

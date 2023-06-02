@@ -8,7 +8,7 @@ class Pacman:
         self.pacman.color("yellow")
         self.pacman.penup()
         self.pacman.speed(0)
-        self.pacman.goto(0, 0)
+        self.pacman.goto(0, 100)
         self.pacman.direction = "stop"
         self.pacman.shapesize(2, 2)
         self.moveSpeed = 6

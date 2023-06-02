@@ -1,16 +1,15 @@
 import turtle as t
 import random
 class Enemy:
-    def __init__ (self):
+    def __init__ (self, color, directionNum):
         self.enemy = t.Turtle()
-        self.colors = ["red", "blue", "pink", "orange"]
         self.enemy.shape("circle")
-        self.enemy.color(random.choice(self.colors))
+        self.enemy.color(color)
         self.enemy.penup()
         self.enemy.speed(0)
         self.enemy.goto(30,0)
         self.enemy.directions = ["up", "down", "left", "right"]
-        self.enemy.direction = random.choice(self.enemy.directions)
+        self.enemy.direction = self.enemy.directions[directionNum]
         self.enemy.shapesize(2, 2)
         self.moveSpeed = 10
 
