@@ -5,34 +5,17 @@ from pacmanClass import Pacman
 from enemiesClass import Enemy
 from wallClass import Walls
 from config import *
-import json
+from importWalls import importWallsTab
 
-jsonWrite = open("walls.json", "w")
-jsonRead = open("walls.json", "r")
-
-
-
-
-
-
-
-
-
-
-
-
-# Walls.drawWalls()
-Walls.addWall(-380.00,260.00)
-
+Walls.importWalls(importWallsTab)
 
 
 pacman = Pacman()
 enemies = []
-# enemies.append(Enemy('red',0))
-# enemies.append(Enemy("blue",1))
-# enemies.append(Enemy("pink",2))
-# enemies.append(Enemy("orange",3))
-
+enemies.append(Enemy('red',0))
+enemies.append(Enemy("blue",1))
+enemies.append(Enemy("pink",2))
+enemies.append(Enemy("orange",3))
 
 
 t.onkeypress(pacman.goUp, "Up")
@@ -42,40 +25,34 @@ t.onkeypress(pacman.goRight, "Right")
 
 
 
-
-
 window.onclick(Walls.addWall)
 window.onclick(Walls.deleteWall, 3)
 
-def printAllWalls():
-    allWalls = []
-    for wall in Walls.wallsTab:
-        allWalls.append(wall.wall.pos())
-    print(allWalls)
 
 
 
-# Clear all Walls
-# Walls.wallsTab.clear()
 
-t.onkeypress(printAllWalls, "p")
+
+
+t.onkeypress(Walls.printAllWalls, "p")
 
 t.listen()
 while True:
     window.update()
     pacman.move()
     for enemy in enemies:
-        enemy.move()    
-
+        enemy.move()  
 
     for wall in Walls.wallsTab:
-        if pacman.distance(wall.wall) < 45:
+
+        if pacman.pacman.pos()[0] < wall.wall.pos()[0] + wall.wall.width and pacman.pacman.pos()[0] + pacman.pacman.width > wall.wall.pos()[0] and pacman.pacman.pos()[1] < wall.wall.pos()[1] + wall.wall.height and pacman.pacman.pos()[1] + pacman.pacman.height > wall.wall.pos()[1]:
             pacman.wallColission()
 
 
         for enemy in enemies:
-            if enemy.distance(wall.wall) < 45:
+            if enemy.enemy.pos()[0] < wall.wall.pos()[0] + wall.wall.width and enemy.enemy.pos()[0] + enemy.enemy.width > wall.wall.pos()[0] and enemy.enemy.pos()[1] < wall.wall.pos()[1] + wall.wall.height and enemy.enemy.pos()[1] + enemy.enemy.height > wall.wall.pos()[1]:
                 enemy.wallColission()
+
             if enemy.distance(pacman.pacman) < 40:
                 print("GAME OVER")
                 time.sleep(1)
@@ -87,4 +64,4 @@ while True:
 
 
 
-    time.sleep(0.05)
+    time.sleep(0.01)

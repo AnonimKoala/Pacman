@@ -7,11 +7,13 @@ class Enemy:
         self.enemy.color(color)
         self.enemy.penup()
         self.enemy.speed(0)
-        self.enemy.goto(30,0)
+        self.enemy.goto(70,0)
         self.enemy.directions = ["up", "down", "left", "right"]
         self.enemy.direction = self.enemy.directions[directionNum]
-        self.enemy.shapesize(2, 2)
-        self.moveSpeed = 10
+        self.enemy.shapesize(1.6,1.6)
+        self.moveSpeed = 4
+        self.enemy.width = 30
+        self.enemy.height = 30
 
     def goDown(self):
         self.enemy.direction = "down"
@@ -25,16 +27,16 @@ class Enemy:
     def move(self):
         if self.enemy.direction == "up":
             y = self.enemy.ycor()
-            self.enemy.sety(y + 4)
+            self.enemy.sety(y + self.moveSpeed)
         elif self.enemy.direction == "down":
             y = self.enemy.ycor()
-            self.enemy.sety(y - 4)
+            self.enemy.sety(y - self.moveSpeed)
         elif self.enemy.direction == "left":
             x = self.enemy.xcor()
-            self.enemy.setx(x - 4)
+            self.enemy.setx(x - self.moveSpeed)
         elif self.enemy.direction == "right":
             x = self.enemy.xcor()
-            self.enemy.setx(x + 4)
+            self.enemy.setx(x + self.moveSpeed)
         
 
     def distance(self, object):

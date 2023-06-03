@@ -12,6 +12,8 @@ class Walls:
         self.wall.penup()
         self.wall.shapesize(stretch_len=Walls.wallSize[0], stretch_wid=Walls.wallSize[1])
         self.wall.goto(pos[0], pos[1])
+        self.wall.width = 40
+        self.wall.height = 40
 
     
 
@@ -27,7 +29,7 @@ class Walls:
 
     @staticmethod
     def addWall(x, y):
-        Walls.wallsTab.append(Walls((x, y)))
+        Walls.wallsTab.append(Walls((int(round(x/10)*10), int(round(y/10)*10))))
     
     @staticmethod
     def deleteWall(x, y):
@@ -37,3 +39,16 @@ class Walls:
                 wall.wall.hideturtle()
                 del wall
                 break
+    
+    @staticmethod
+    def importWalls(walls):
+        for wall in walls:
+            Walls.addWall(wall[0], wall[1])
+
+    @staticmethod
+    def printAllWalls():
+        allWalls = []
+        for wall in Walls.wallsTab:
+            allWalls.append(wall.wall.pos())
+        print("\n\nWalls: \n")
+        print(allWalls)
