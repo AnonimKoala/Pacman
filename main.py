@@ -6,6 +6,7 @@ from enemiesClass import Enemy
 from wallClass import Walls
 from config import *
 from importWalls import importWallsTab
+from pointsClass import Point
 
 Walls.importWalls(importWallsTab)
 
@@ -31,15 +32,23 @@ window.onclick(Walls.deleteWall, 3)
 
 
 
-
-
+Point(70,0)
 
 t.onkeypress(Walls.printAllWalls, "p")
-
 t.listen()
+
+
 while True:
     window.update()
     pacman.move()
+
+    for point in Point.pointsTab:
+        if pacman.distance(point.point) < 20:
+            point.packmanColission()
+        
+        if point.getEaten() == True:
+            point.decreaseTimeout()
+
     for enemy in enemies:
         enemy.move()  
 
@@ -62,6 +71,6 @@ while True:
 
 
 
-
+    
 
     time.sleep(0.01)

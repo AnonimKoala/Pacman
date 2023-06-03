@@ -8,3 +8,5 @@ window.title("Pacman")
 window.setup(windowWidth, windowHigh)
 t.bgcolor("black")
 window.tracer(0)
+
+
