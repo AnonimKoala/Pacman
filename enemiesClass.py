@@ -9,6 +9,7 @@ window.addshape('enemies/orange.gif')
 window.addshape('enemies/green.gif')
 window.addshape('enemies/purple.gif')
 window.addshape('enemies/white.gif')
+window.addshape('enemies/brown.gif')
 
 
 

@@ -16,7 +16,7 @@ class Pacman:
         self.pacman.goto(-25, 140)
         self.pacman.direction = "stop"
         self.pacman.shapesize(2, 2)
-        self.moveSpeed = 6
+        self.moveSpeed = 3.5
 
         self.pacman.width = 35
         self.pacman.height = 35
