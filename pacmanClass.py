@@ -1,32 +1,41 @@
 import turtle as t
 
+window = t.Screen()
+window.addshape('pacman/right.gif')
+window.addshape('pacman/left.gif')
+window.addshape('pacman/up.gif')
+window.addshape('pacman/down.gif')
 
 class Pacman:
     def __init__(self):
         self.pacman = t.Turtle()
-        self.pacman.shape("circle")
+        self.pacman.shape("pacman/right.gif")
         self.pacman.color("yellow")
         self.pacman.penup()
         self.pacman.speed(0)
         self.pacman.goto(-25, 140)
         self.pacman.direction = "stop"
         self.pacman.shapesize(2, 2)
-        self.moveSpeed = 3
+        self.moveSpeed = 6
 
         self.pacman.width = 35
         self.pacman.height = 35
 
     def goDown(self):
         self.pacman.direction = "down"
+        self.pacman.shape("pacman/down.gif")
 
     def goUp(self):
         self.pacman.direction = "up"
+        self.pacman.shape("pacman/up.gif")
 
     def goLeft(self):
         self.pacman.direction = "left"
+        self.pacman.shape("pacman/left.gif")
 
     def goRight(self):
         self.pacman.direction = "right"
+        self.pacman.shape("pacman/right.gif")
 
     def move(self):
         if self.pacman.direction == "up":

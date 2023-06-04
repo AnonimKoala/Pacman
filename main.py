@@ -6,17 +6,17 @@ from enemiesClass import Enemy
 from wallClass import Walls
 from config import *
 from importWalls import importWallsTab
-from pointsClass import Point
+from pointsClass import *
+
 
 Walls.importWalls(importWallsTab)
 
 
 pacman = Pacman()
-enemies = []
-enemies.append(Enemy('red',0))
-enemies.append(Enemy("blue",1))
-enemies.append(Enemy("pink",2))
-enemies.append(Enemy("orange",3))
+Enemy.enemiesTab.append(Enemy('red',0))
+Enemy.enemiesTab.append(Enemy("blue",1))
+Enemy.enemiesTab.append(Enemy("pink",2))
+Enemy.enemiesTab.append(Enemy("orange",3))
 
 
 t.onkeypress(pacman.goUp, "Up")
@@ -26,30 +26,33 @@ t.onkeypress(pacman.goRight, "Right")
 
 
 
-window.onclick(Walls.addWall)
-window.onclick(Walls.deleteWall, 3)
+Point(-240.0, 120.0)
+Point(193.0, 271.0)
+Point(-69.0, -331.0)
+Point(-321.0, 330.0)
+Point(134.0, 118.0)
+Point(279.0, -228.0)
 
-
-
-
-Point(70,0)
-
-t.onkeypress(Walls.printAllWalls, "p")
 t.listen()
-
 
 while True:
     window.update()
     pacman.move()
 
-    for point in Point.pointsTab:
-        if pacman.distance(point.point) < 20:
-            point.packmanColission()
-        
-        if point.getEaten() == True:
-            point.decreaseTimeout()
 
-    for enemy in enemies:
+    pointShowFlag = False
+    for point in Point.pointsTab:
+        if pacman.distance(point.point) < 20 and point.getEaten() == False:
+            point.packmanColission()
+
+
+        if point.getEaten() == False:
+            pointShowFlag = True
+
+    if pointShowFlag == False:
+        Point.showPoints()
+
+    for enemy in Enemy.enemiesTab:
         enemy.move()  
 
     for wall in Walls.wallsTab:
@@ -58,13 +61,15 @@ while True:
             pacman.wallColission()
 
 
-        for enemy in enemies:
+        for enemy in Enemy.enemiesTab:
             if enemy.enemy.pos()[0] < wall.wall.pos()[0] + wall.wall.width and enemy.enemy.pos()[0] + enemy.enemy.width > wall.wall.pos()[0] and enemy.enemy.pos()[1] < wall.wall.pos()[1] + wall.wall.height and enemy.enemy.pos()[1] + enemy.enemy.height > wall.wall.pos()[1]:
                 enemy.wallColission()
 
             if enemy.distance(pacman.pacman) < 40:
+                updateScorebar()
+                window.update()
                 print("GAME OVER")
-                time.sleep(1)
+                time.sleep(2)
                 window.bye()
                 quit()
             

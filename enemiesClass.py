@@ -1,9 +1,46 @@
 import turtle as t
 import random
+
+window = t.Screen()
+window.addshape('enemies/blue.gif')
+window.addshape('enemies/red.gif')
+window.addshape('enemies/pink.gif')
+window.addshape('enemies/orange.gif')
+window.addshape('enemies/green.gif')
+window.addshape('enemies/purple.gif')
+window.addshape('enemies/white.gif')
+
+
+
 class Enemy:
+    enemiesTab = []
+
     def __init__ (self, color, directionNum):
         self.enemy = t.Turtle()
-        self.enemy.shape("circle")
+
+
+        if color == 'blue':
+            self.enemy.shape("enemies/blue.gif")
+        elif color == 'red':
+            self.enemy.shape("enemies/red.gif")
+        elif color == 'pink':
+            self.enemy.shape("enemies/pink.gif")
+        elif color == 'orange':
+            self.enemy.shape("enemies/orange.gif")
+        elif color == 'green':
+            self.enemy.shape("enemies/green.gif")
+        elif color == 'purple':
+            self.enemy.shape("enemies/purple.gif")
+        elif color == 'white':
+            self.enemy.shape("enemies/white.gif")
+        elif color == 'brown':
+            self.enemy.shape("enemies/brown.gif")
+        else: 
+            self.enemy.shape("circle")
+
+
+
+        
         self.enemy.color(color)
         self.enemy.penup()
         self.enemy.speed(0)
@@ -78,3 +115,9 @@ class Enemy:
     def rightWall(self):
         self.enemy.setx(self.enemy.xcor() - 5)
 
+
+    @staticmethod
+    def summonEnemy():
+        colors = ["red", "blue", "green", "pink", "orange", "purple", "brown", "white"]
+        Enemy.enemiesTab.append(Enemy(random.choice(colors), random.randint(0,3)))
+        

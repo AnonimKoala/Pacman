@@ -1,5 +1,7 @@
 import turtle as t
 from config import windowWidth, windowHigh
+window = t.Screen()
+window.addshape('block.gif')
 
 class Walls:
     wallsTab = []
@@ -7,7 +9,10 @@ class Walls:
     
     def __init__(self, pos):
         self.wall = t.Turtle()
-        self.wall.shape("square")
+        self.wall.shape("block.gif")
+
+        
+
         self.wall.color("#001a8f")
         self.wall.penup()
         self.wall.shapesize(stretch_len=Walls.wallSize[0], stretch_wid=Walls.wallSize[1])

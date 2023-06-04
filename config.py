@@ -9,4 +9,6 @@ window.setup(windowWidth, windowHigh)
 t.bgcolor("black")
 window.tracer(0)
 
+window.bgpic("background.gif")
+
 
